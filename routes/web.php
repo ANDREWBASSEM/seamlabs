@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\UserController;
 use App\Models\Menu;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,9 @@ Route::get('admin', function () {
     $rows = Menu::all();
    return view('admin/M_index',compact('rows'));
 });
+Route::view('m-login', 'admin.M_login');
 
+Route::post('login',[ UserController::class,"login"])->name('login');
 
 
 

@@ -26,6 +26,7 @@ class MenuController extends Controller
     public function create()
     {
         //
+        return view("admin.M_add");
     }
 
     /**
@@ -37,6 +38,17 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         //
+        $n= new Menu;
+        $n->title = $request ->input('menu_title');
+        $n->price = $request ->input('menu_price');
+        $n->img = $request ->input('menu_image');
+        $n->info = $request ->input('menu_info');
+        $n->item_status = $request ->input('menu_status');
+        $n->save();
+        
+        return redirect()
+                        ->route('menus.index')
+                        ->with('msg','Your Item Added Successfully');
     }
 
     /**
@@ -59,6 +71,8 @@ class MenuController extends Controller
     public function edit($id)
     {
         //
+        $rs = Menu::find($id);
+        return view('admin.M_update',['row'=>$rs]);
     }
 
     /**
@@ -67,10 +81,21 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     **/
     public function update(Request $request, $id)
     {
         //
+        $rc = Menu::find($id);
+
+        $rc->title = $request ->input('menu_title');
+        $rc->price = $request ->input('menu_price');
+        $rc->img = $request ->input('menu_image');
+        $rc->info = $request ->input('menu_info');
+        $rc->item_status = $request ->input('menu_status');
+        $rc->save();
+        return redirect()
+                        ->route('menus.index')
+                        ->with('msg','Your Item updated Successfully');
     }
 
     /**
@@ -82,5 +107,9 @@ class MenuController extends Controller
     public function destroy($id)
     {
         //
+        Menu::destroy($id);
+        return redirect()
+                        ->route('menus.index')
+                        ->with('msg','Your Item Deleted Successfully');
     }
 }
